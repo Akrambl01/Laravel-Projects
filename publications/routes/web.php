@@ -1,15 +1,12 @@
 <?php
 
-// to use the HomeController class
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
-// to use the Route class
 use Illuminate\Support\Facades\Route;
-// to use the Request class
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 
 Route::get("/welcome/{nom}/{prenom}", function (Request $request) {
     $do = "Learn Laravel";
@@ -47,7 +44,7 @@ Route::get("/route",function(){
     dd(Route::currentRouteAction()); // return the current route action ex: index
 })->name("route");
 
-// to redirect to another web site
+//* redirect to another web site
 Route::get("/google",function(){
     return redirect()->away("https://www.google.com");
 });
@@ -66,4 +63,21 @@ Route::post("/form",function(Request $request){
     $request->mergeIfMissing(["date"=>date("Y/m/d")]);
     dd($request->input("date"));
 })->name("form");
+
+
+//* Response 
+// we use Response to return a response with a specific status code and headers and download files
+Route::get("/response",function(){
+    $response = new Response("Hello World", 200);
+    // return $response->header("Content-Type","text/plain");
+    // return  response("Hello World", 200)->header("Content-Type","text/plain");
+    // to download a file
+    // return response()->download(public_path("robots.txt"));
+    // to return a file with a specific name and headers and inline to show the file in the browser instead of downloading it 
+    // return response()->download(public_path("storage/profiles/user.png","name.png",[""], "inline"));
+    // to return a file
+    return response()->file(public_path("storage/profiles/user.png"));
+    //*diff between download and file is that file return the file content (read file) in the browser and download download the file
+
+});
 
