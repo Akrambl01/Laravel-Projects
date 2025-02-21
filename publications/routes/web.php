@@ -105,3 +105,18 @@ Route::get("/cookie/delete", function(){
     $cookieObject = cookie()->forget("username");
     return $response->withCookie($cookieObject);
 });
+
+// headers
+// headers are used to send additional information with the request or the response , 
+// this information can be used to authenticate the user or to send the content type of the response , content type is used to tell the browser how to render the response
+
+Route::get("/headers", function(Request $request){
+    // to get a header we use the header method and pass the name of and we can pass a default value if the header is not found
+    dd($request->header("Content-Type", "default value"));
+
+    // to get all headers
+    // return $request->headers->all();
+
+    // to send a header we use the header method and pass the name of the header and the value
+    // return response(["data"=>[1,2,3,4,5,6,7,7,8,90,0]])->withHeaders(["Content-Type"=>"application/json", "X-akram-Token"=>"b4jdh7ibve6rhf"]);
+});
