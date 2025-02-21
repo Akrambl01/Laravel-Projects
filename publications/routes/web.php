@@ -78,6 +78,21 @@ Route::get("/response",function(){
     // to return a file
     return response()->file(public_path("storage/profiles/user.png"));
     //*diff between download and file is that file return the file content (read file) in the browser and download download the file
+});
 
+// set cookies
+Route::get("/cookie/set/{cookie?}", function($cookie = "default cookie"){
+    $response = new Response("Cookie Set ".$cookie , 200);
+    // to set a cookie we use the cookie method and pass the name of the cookie and the value and the time to expire in minutes
+    $cookieObject = cookie("username", $cookie, 5);
+    // to set a cookie forever 
+    // $cookieObject = cookie()->forever("username", $cookie);
+    return $response->withCookie($cookieObject);
+});
+
+// get cookies
+Route::get("/cookie/get", function(Request $request){
+    // to get a cookie we use the cookie method and pass the name of the cookie
+    return $request->cookie("username", "default value");
 });
 
