@@ -57,3 +57,13 @@ Route::get("/google",function(){
 // to list all routes we use this command php artisan route:list
 // to list all routes with their middleware we use this command php artisan route:list --show
 
+Route::view("/form","form");
+Route::post("/form",function(Request $request){
+    //* use the input method to get the value of the input field , instead of using the request object bc it's more readable and performant and have more features and methods
+    // dd($request->input("input_field", "default value"));
+    // dd($request->input("date", "2004/12/12"));
+    // dd($request->input());
+    $request->mergeIfMissing(["date"=>date("Y/m/d")]);
+    dd($request->input("date"));
+})->name("form");
+
