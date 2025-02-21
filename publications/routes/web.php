@@ -96,3 +96,12 @@ Route::get("/cookie/get", function(Request $request){
     return $request->cookie("username", "default value");
 });
 
+// delete cookies
+Route::get("/cookie/delete", function(){
+    $response = new Response("Cookie Deleted", 200);
+    // to delete a cookie we use the cookie method and pass the name of the cookie and set the time to expire to -1
+    // $cookieObject = cookie("username", "", -1);
+    // or 
+    $cookieObject = cookie()->forget("username");
+    return $response->withCookie($cookieObject);
+});
