@@ -26,7 +26,7 @@
     </div>
     <div class="mb-3">
         <label for="body" class="form-label">Body</label>
-        <input type="text" name="body" id="body" class="form-control @error('body') is-invalid @enderror" value="{{ old('body') }}">
+        <textarea type="text" name="body" id="body" class="form-control @error('body') is-invalid @enderror" >{{ old('body') }}</textarea>
         @error('body')
         <div class="invalid-feedback">{{ $message }}</div>
         @enderror

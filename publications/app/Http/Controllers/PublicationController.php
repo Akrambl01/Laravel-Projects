@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PublicationRequest;
 use App\Models\Publication;
+use App\Services\UploadImage;
 use Illuminate\Http\Request;
 
 class PublicationController extends Controller
@@ -13,7 +14,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        //
+        view("publication.index");
     }
 
     /**
@@ -27,16 +28,12 @@ class PublicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PublicationRequest $request)
+    public function store(PublicationRequest $request, UploadImage $uploadImage)
     {
         $form_data = $request->validated();
-        $image = $request->file("image");
-        $image_name = time() . "_" . $image->getClientOriginalName();
-        $image->move(public_path("images"), $image_name);
-        $form_data["image"] = $image_name;
+        $uploadImage->upload($request, $form_data, 'image', 'publications');
         Publication::create($form_data);
-        return redirect()->route("publications.index");
-        
+        return to_route("publications.index");
     }
 
     /**
