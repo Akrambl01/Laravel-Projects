@@ -33,7 +33,7 @@ class PublicationController extends Controller
         $form_data = $request->validated();
         $uploadImage->upload($request, $form_data, 'image', 'publications');
         Publication::create($form_data);
-        return to_route("publications.index")->with("success", "Votre profile a été créé avec succès");
+        return to_route("publications.index")->with("success", "your publication has been created successfully");
     }
 
     /**
@@ -55,9 +55,12 @@ class PublicationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Publication $publication)
+    public function update(PublicationRequest $request, Publication $publication, UploadImage $uploadImage)
     {
-        //
+        $form_data = $request->validated();
+        $uploadImage->upload($request, $form_data, 'image', 'publications');
+        $publication->fill($form_data)->save();
+        return to_route("publications.index")->with("success", "your publication has been updated successfully");
     }
 
     /**
