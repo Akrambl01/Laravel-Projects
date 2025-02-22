@@ -25,6 +25,9 @@
             <a class="nav-link {{ request()->routeIs("profiles.create")  ? "active fw-bold" : " " }}" href="{{ route('profiles.create') }}">Ajouter Profile</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs("publications.index")  ? "active fw-bold" : " " }}" href="{{ route('publications.index') }}">Publications</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link {{ request()->routeIs("publications.create")  ? "active fw-bold" : " " }}" href="{{ route('publications.create') }}">Ajouter publication</a>
           </li>
         </ul>
