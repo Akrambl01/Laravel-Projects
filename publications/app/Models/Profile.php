@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Publication;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Profile extends Model
 {
@@ -23,6 +24,16 @@ class Profile extends Model
     // this functions is used to get the image from the database and if the image is null it will return the default image value when i use the image attribute in the view
     {
         return $value ? $value : "profiles/user.png";
+    }
+
+    public function publications()
+    {
+        // this function is used to define the relationship between the profile model and the publication model
+        // the relationship is one to many (one profile has many publications)
+        // the first parameter is the model that we want to relate to (Publication::class)
+        // the second parameter is the foreign key (profile_id) in the publications table
+        // the third parameter is the local key (id) in the profiles table
+        return $this->hasMany(Publication::class, "profile_id", "id");
     }
 }
 

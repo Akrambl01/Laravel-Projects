@@ -9,5 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Publication extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['titre', 'body', 'image'];
+    protected $fillable = ['titre', 'body', 'image', 'profile_id'];
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
 }

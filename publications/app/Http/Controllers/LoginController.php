@@ -16,14 +16,15 @@ class LoginController extends Controller
         $login = $request->login;
         $password = $request->password;
         $credentials = ["email" => $login, "password" => $password];
-
+        // attempt is a method that takes an array of credentials and check if the user exists in the database
+        // if the user exists it will log him in and return true
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return to_route("homepage")->with("success", "You are logged in".$login.".");
         } else {
             return back()->withErrors([
                 "login" => "Email or password is incorrect",
-            ])->onlyInput('login');
+            ])->onlyInput('login'); // we use onlyInput to keep the email in the input field after the redirection
         }
       
     }

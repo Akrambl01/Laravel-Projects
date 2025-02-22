@@ -5,6 +5,7 @@
 
 <x-master title="Profiles">
     <div class="row">
+        <h2>Profile</h2>
         <div class="card my-4 py-4">
             <img src="{{asset("storage/".$profile->image)}}" alt="img" class="card-img-top w-25 mx-auto">
             <div class="card-body text-center">
@@ -15,11 +16,11 @@
             </div>
         </div>
     </div>
-<ul>
-    <li>name: {{$profile->name}}</li>
-    <li>email: {{$profile->email}}</li>
-    <li>bio: {{$profile->bio}}</li>
-</ul>
-
+    <div class="row my-2">
+        <p>Publications</p>
+        @foreach ($profile->publications as $publication)
+        <x-publication :canUpdate="$publication->profile_id === auth()->user()->id" :publication="$publication"/> 
+        @endforeach
+    </div>
 
 </x-master>

@@ -6,9 +6,15 @@ use App\Http\Requests\PublicationRequest;
 use App\Models\Publication;
 use App\Services\UploadImage;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PublicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth")->except(["index", "show"]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -33,6 +39,7 @@ class PublicationController extends Controller
     {
         $form_data = $request->validated();
         $uploadImage->upload($request, $form_data, 'image', 'publications');
+        $form_data['profile_id'] = Auth::user()->id;;
         Publication::create($form_data);
         return to_route("publications.index")->with("success", "your publication has been created successfully");
     }
