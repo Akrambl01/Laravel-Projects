@@ -20,6 +20,7 @@ class Profile extends Model
     use SoftDeletes;
 
     public function getImageAttribute($value)
+    // this functions is used to get the image from the database and if the image is null it will return the default image value when i use the image attribute in the view
     {
         return $value ? $value : "profiles/user.png";
     }
