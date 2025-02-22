@@ -49,7 +49,7 @@ class PublicationController extends Controller
      */
     public function edit(Publication $publication)
     {
-        view("publication.edit", compact("publication"));
+        return view("publication.edit", compact("publication"));
     }
 
     /**

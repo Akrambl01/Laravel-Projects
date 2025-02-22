@@ -20,14 +20,14 @@
         @csrf
         <div class="mb-3">
             <label for="titre" class="form-label">Titre</label>
-            <input type="text" name="titre" id="titre" class="form-control @error('titre') is-invalid @enderror" value="{{ old('titre') }}">
+            <input type="text" name="titre" id="titre" class="form-control @error('titre') is-invalid @enderror" value="{{ old('titre', $publication->titre) }}">
             @error('titre')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
             <label for="body" class="form-label">Body</label>
-            <textarea type="text" name="body" id="body" class="form-control @error('body') is-invalid @enderror" >{{ old('body') }}</textarea>
+            <textarea type="text" name="body" id="body" class="form-control @error('body') is-invalid @enderror" >{{ old('body',$publication->body) }}</textarea>
             @error('body')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -38,6 +38,9 @@
             @error('image')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+            <div class="my-2"> 
+                <img src="{{asset('storage/'.$publication->image)}}" alt="image" style="width: 200px">
+            </div>
         </div>
         <div class="d-grid my-2">
             <button type="submit" class="btn btn-primary">Update</button>
