@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PublicationRequest;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,16 @@ class PublicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PublicationRequest $request)
     {
-        //
+        $form_data = $request->validated();
+        $image = $request->file("image");
+        $image_name = time() . "_" . $image->getClientOriginalName();
+        $image->move(public_path("images"), $image_name);
+        $form_data["image"] = $image_name;
+        Publication::create($form_data);
+        return redirect()->route("publications.index");
+        
     }
 
     /**

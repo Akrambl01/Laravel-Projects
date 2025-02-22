@@ -11,6 +11,7 @@ class ProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // we return true because we want to authorize all users to make this request without any condition like authentication
         return true;
     }
 

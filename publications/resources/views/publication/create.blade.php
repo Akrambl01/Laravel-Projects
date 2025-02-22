@@ -15,7 +15,7 @@
 @endif
 
 <h3>Ajouter Publications</h3>
-<form method="POST" action="{{ route('publication.store') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('publications.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
         <label for="titre" class="form-label">Titre</label>
