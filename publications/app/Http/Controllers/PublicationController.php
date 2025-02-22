@@ -14,7 +14,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        view("publication.index");
+        return view("publication.index");
     }
 
     /**
@@ -33,7 +33,7 @@ class PublicationController extends Controller
         $form_data = $request->validated();
         $uploadImage->upload($request, $form_data, 'image', 'publications');
         Publication::create($form_data);
-        return to_route("publications.index");
+        return to_route("publications.index")->with("success", "Votre profile a été créé avec succès");
     }
 
     /**
