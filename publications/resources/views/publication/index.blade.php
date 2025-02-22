@@ -12,7 +12,7 @@
                 <form action="{{ route('publications.destroy', $publication->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm float-end btn-danger mx-2">Delete</button>
+                    <button type="submit" class="btn btn-sm float-end btn-danger mx-2" onclick="return confirm('Are you sure ?')">Delete</button>
                 </form>
                 <blockquote class="blockquote mb-0">
                     <p><strong>{{ $publication->titre }}</strong></p>
