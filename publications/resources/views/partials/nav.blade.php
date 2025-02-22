@@ -12,7 +12,7 @@
           {{-- guest : if user is not authentificated   --}}
           @guest
           <li class="nav-item">    
-            <a class="nav-link {{ request()->routeIs("login.show")  ? "active fw-bold" : " " }} " href="{{ route('login.show') }}">Se connecter</a>          
+            <a class="nav-link {{ request()->routeIs("login.show")  ? "active fw-bold" : " " }}" href="{{ route('login.show') }}">Se connecter</a>          
           </li>
           @endguest
           <li class="nav-item">
@@ -22,7 +22,10 @@
             <a class="nav-link {{ request()->routeIs("settings.index") ? "active fw-bold" : " " }}" href="{{ route('settings.index') }}">mes info</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs("create")  ? "active fw-bold" : " " }}" href="{{ route('profiles.create') }}">Ajouter Profile</a>
+            <a class="nav-link {{ request()->routeIs("profiles.create")  ? "active fw-bold" : " " }}" href="{{ route('profiles.create') }}">Ajouter Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs("publications.create")  ? "active fw-bold" : " " }}" href="{{ route('publications.create') }}">Ajouter publication</a>
           </li>
         </ul>
         {{-- auth : if user is authentificated   --}}

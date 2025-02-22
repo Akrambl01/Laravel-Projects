@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,6 +19,16 @@ Route::get("/", [HomeController::class, "index"])->name("homepage");
 
 
 Route::resource("profiles", ProfileController::class);
+Route::resource("publications", PublicationController::class);
+// when we use the resource method we get the following routes
+// GET /profiles => index : to get all profiles
+// GET /profiles/create => create : to show the form to create a profile
+// POST /profiles => store : to store the profile in the database
+// GET /profiles/{id} => show : to show a specific profile
+// GET /profiles/{id}/edit => edit : to show the form to edit a profile
+// PUT/PATCH /profiles/{id} => update : to update the profile in the database
+// DELETE /profiles/{id} => destroy : to delete the profile from the database
+
 
 Route::get("/settings", [InfoController::class, "index"])->name("settings.index");
 
@@ -127,7 +138,7 @@ Route::get("/request", function(Request $request){
     $request->query(), $request->host(), 
     $request->method(), $request->isMethod("get"),
     $request->ip(), $request->userAgent(), 
-    $request->server(), $request->getClientIp(),);
+    $request->server(), $request->getClientIp());
 });
 // user agent is used to get the browser information of the user to know the browser and the version and the operating system and the device type and the engine used to render the page and 
 // the user agent is used to render the page in a specific way to be compatible with the browser and the device and the operating system

@@ -20,7 +20,7 @@ class PublicationController extends Controller
      */
     public function create()
     {
-        //
+        return view("publication.create");
     }
 
     /**
