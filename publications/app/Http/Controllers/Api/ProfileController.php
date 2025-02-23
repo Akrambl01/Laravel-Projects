@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -13,14 +14,17 @@ class ProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Collection
+    public function index()
     {
         // $profiles = Profile::all();
         // return response()->json($profiles);
         // or 
-        return Profile::all();
+        // return Profile::all();
         // to get also the deleted profiles
         // return Profile::withTrashed()->get();
+
+        // when work resource class
+        return ProfileResource::collection(Profile::all());
     }
 
     /**
@@ -30,7 +34,8 @@ class ProfileController extends Controller
     {
         $formFields = $request->all();
         $formFields["password"] = Hash::make($request->password);
-        return Profile::create($formFields);
+        $profile = Profile::create($formFields);
+        return new ProfileResource($profile);
     }
 
     /**
@@ -38,7 +43,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        return $profile;
+        return new ProfileResource($profile);
     }
 
     /**
@@ -50,7 +55,7 @@ class ProfileController extends Controller
         $profile->fill($formFields)->save();
         $formFields["password"] = Hash::make($formFields["password"]);
         
-        return response()->json(["message" => "profile updated successfully", "profile" => $profile, "errors" => []]);
+        return new ProfileResource($profile);
     }
 
     /**
