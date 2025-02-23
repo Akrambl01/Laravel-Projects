@@ -1,16 +1,17 @@
 @props(['publication', 'canUpdate'])
 <div class="card my-2 bg-light">
     <div class="card-body">
-        @auth
-        @if ($canUpdate)
+        {{-- instead of using @auth and canUpdate var that pass in props to check if the user can update the publication, we can use the @can directive  --}}
+        @can('update', $publication)
         <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-sm btn-primary float-end">Edit</a>
+        @endcan
+        @can('delete', $publication)
         <form action="{{ route('publications.destroy', $publication->id) }}" method="POST" class="d-inline">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-sm float-end btn-danger mx-2" onclick="return confirm('Are you sure ?')">Delete</button>
         </form>
-        @endif
-        @endauth
+        @endcan
         <blockquote class="blockquote mb-0">
             <div class="container">
                 <div class="row align-items-center ">

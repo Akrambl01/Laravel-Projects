@@ -8,6 +8,7 @@ use App\Services\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PublicationController extends Controller
 {
@@ -57,6 +58,10 @@ class PublicationController extends Controller
      */
     public function edit(Publication $publication)
     {
+        //* Authorization: to check if the user can update the publication
+        Gate::authorize('update', $publication);
+        // or 
+        // $this->authorize('update', $publication);
         return view("publication.edit", compact("publication"));
     }
 
@@ -65,6 +70,7 @@ class PublicationController extends Controller
      */
     public function update(PublicationRequest $request, Publication $publication, UploadImage $uploadImage)
     {
+        Gate::authorize('update', $publication);
         $form_data = $request->validated();
         $uploadImage->upload($request, $form_data, 'image', 'publications');
         $publication->fill($form_data)->save();
@@ -76,6 +82,7 @@ class PublicationController extends Controller
      */
     public function destroy(Publication $publication)
     {
+        Gate::authorize('delete', $publication);
         $publication->delete();
         return to_route("publications.index")->with("success", "your publication has been deleted successfully");
     }

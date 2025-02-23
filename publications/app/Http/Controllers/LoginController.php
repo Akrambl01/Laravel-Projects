@@ -20,7 +20,7 @@ class LoginController extends Controller
         // if the user exists it will log him in and return true
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return to_route("homepage")->with("success", "You are logged in".$login.".");
+            return redirect()->intended("homepage")->with("success", "You are logged in".$login.".");
         } else {
             return back()->withErrors([
                 "login" => "Email or password is incorrect",
