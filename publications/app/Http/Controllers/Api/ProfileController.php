@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
-use App\Services\UploadImage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +28,9 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formFields = $request->all();
+        $formFields["password"] = Hash::make($request->password);
+        return Profile::create($formFields);
     }
 
     /**
@@ -44,14 +44,12 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProfileRequest $request, Profile $profile, UploadImage $uploadImage)
+    public function update(Request $request, Profile $profile)
     {
-        // $formFields = $request->all();
-        $formFields = $request->validated();
-        $uploadImage->upload($request, $formFields, 'image', 'profiles');
-        $formFields["password"] = Hash::make($formFields["password"]);
+        $formFields = $request->all();
         $profile->fill($formFields)->save();
-
+        $formFields["password"] = Hash::make($formFields["password"]);
+        
         return response()->json(["message" => "profile updated successfully", "profile" => $profile, "errors" => []]);
     }
 
