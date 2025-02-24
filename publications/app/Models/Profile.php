@@ -35,6 +35,17 @@ class Profile extends Model
         // the third parameter is the local key (id) in the profiles table
         return $this->hasMany(Publication::class, "profile_id", "id");
     }
+
+    // Automatically soft delete publications when a profile is soft deleted
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($profile) {
+            $profile->publications()->delete(); // Soft delete all related publications
+        });
+    }
+    
 }
 
 // the model is a class that represents a table in the database and it is used to interact with the database

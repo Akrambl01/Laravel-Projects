@@ -32,7 +32,7 @@ class ProfileRequest extends FormRequest
             // "password_confirmation" => "required|confirmed",
             "bio" => "required|string",
             // the image field is required and must be an image and jpeg, png, jpg, svg and max size is 8 Mb
-            // "image" => "image|mimes:jpeg,png,jpg,svg|max:8192",
+            "image" => "image|mimes:jpeg,png,jpg,svg|max:8192",
         ];
     }
 }

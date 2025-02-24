@@ -131,6 +131,7 @@ class ProfileController extends Controller
 
         //* insertion after hashing the password:
         Profile::create($formFields);
+        Cache::forget("profiles");
 
         //* redirections :
         // to redirect the user to the profiles page after storing the data in the database
@@ -153,7 +154,7 @@ class ProfileController extends Controller
     public function destroy(Profile $profile){
         // to delete the data from the profiles table with the id = $id
         $profile->delete();
-
+        Cache::forget("profiles");
         return to_route("profiles.index")->with("success", "Votre profile a été supprimé avec succès");
     }
 
