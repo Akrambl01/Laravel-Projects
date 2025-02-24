@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -25,9 +26,17 @@ class ProfileController extends Controller
         // $profiles = Profile::all();
 
         // to get the data from the profiles table with pagination (9 profiles per page)
-        $profiles = Profile::paginate(9);
+        // $profiles = Profile::paginate(9);
 
+        $profiles = Cache::remember("profiles", 10, function(){
+            return Profile::paginate(9);
+        });
         return view("profile.index", compact("profiles"));
+
+        //* to delete the cache
+        // Cache::forget("profiles");
+        //* to get the cache and delete form DB it in the same time
+        // $profiles = Cache::pull("profiles");
     }
 
     public function show(Profile $profile){
@@ -46,6 +55,27 @@ class ProfileController extends Controller
         // if(!$profile){
         //    return abort(404);
         // }
+
+        $cachePrefix = "profile_".$profile->id;
+        //* method 1 to store the data in the cache
+        /*
+        / has method to check if the cache exists or not
+        if(Cache::has($cachePrefix)){
+            / get the data from the cache
+            $profile = Cache::get($cachePrefix);
+        }else{
+            /put , to store the data in the cache with the key $cachePrefix and the value $profile and the expiration time is 5 minutes
+        Cache::put($cachePrefix, $profile, 5);
+        / or forever , to store the data in the cache forever
+        / Cache::forever($cachePrefix, $profile);
+        }
+       */
+
+        //* method 2 to store the data in the cache
+        // instead of using the has() to check and put() to store the data in the cache we can use the remember() method 
+        $profile = Cache::remember($cachePrefix, 5, function() use($profile){
+            return $profile;
+        });
 
         return view("profile.show", compact("profile"));
     }
