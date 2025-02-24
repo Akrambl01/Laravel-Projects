@@ -22,7 +22,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
-                return response("kkkkk");
+                return response()->json([
+                    'message' => 'Api not found', 
+                    "error" => $e->getMessage(),
+                    "status" => 404
+            ], 404);
             }
         });
     })->create();
