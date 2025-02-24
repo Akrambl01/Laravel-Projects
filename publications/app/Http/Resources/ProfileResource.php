@@ -15,7 +15,9 @@ class ProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         $values = parent::toArray($request);
-        $values["image"] = url("storage/" . $this["image"]);
+        if(isset($values["image"])){
+            $values["image"] = url("storage/" . $this["image"]);
+        }
         // format the updated_at date to be like this format "1 minute ago"
         $values["updated_at"] = $this["updated_at"]->diffForHumans();
         // format the created_at date to be like this format "01-01-2021"

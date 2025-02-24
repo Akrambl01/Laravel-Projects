@@ -7,24 +7,22 @@ use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    private const CACHE_KEY = "profiles_api";
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $profiles = Profile::all();
-        // return response()->json($profiles);
-        // or 
-        // return Profile::all();
-        // to get also the deleted profiles
-        // return Profile::withTrashed()->get();
+        $profiles = Cache::remember(self::CACHE_KEY, 10000, function(){
+            return ProfileResource::collection(Profile::all());
+        });
 
-        // when work resource class
-        return ProfileResource::collection(Profile::all());
+        return $profiles;
     }
 
     /**
@@ -35,6 +33,14 @@ class ProfileController extends Controller
         $formFields = $request->all();
         $formFields["password"] = Hash::make($request->password);
         $profile = Profile::create($formFields);
+
+        // Delete cache
+        Cache::forget(self::CACHE_KEY);
+        // Update cache
+        Cache::remember(self::CACHE_KEY, 10000, function(){
+            return ProfileResource::collection(Profile::all());
+        });
+
         return new ProfileResource($profile);
     }
 
@@ -54,7 +60,14 @@ class ProfileController extends Controller
         $formFields = $request->all();
         $profile->fill($formFields)->save();
         $formFields["password"] = Hash::make($formFields["password"]);
-        
+
+        // Delete cache
+        Cache::forget(self::CACHE_KEY);
+        // Update cache
+        Cache::remember(self::CACHE_KEY, 10000, function(){
+            return ProfileResource::collection(Profile::all());
+        });
+
         return new ProfileResource($profile);
     }
 
@@ -64,6 +77,14 @@ class ProfileController extends Controller
     public function destroy(Profile $profile)
     {
         $profile->delete();
+
+        // Delete cache
+        Cache::forget(self::CACHE_KEY);
+        // Update cache
+        Cache::remember(self::CACHE_KEY, 10000, function(){
+            return ProfileResource::collection(Profile::all());
+        });
+
         return response()->json(["message" => "profile deleted successfully", "id" => $profile->id, "errors" => []]);
     }
 }
