@@ -24,12 +24,12 @@ class HomeController extends Controller
         // $request->session()->all();
         
         // to increment the value of the count key in the session, by default the increment value is 1
-        // $count = $request->session()->increment("count", 1);
+        $count = $request->session()->increment("count", 1);
 
         // to add value to session array 
         // $request->session()->push("user.teams", "developers");
         // to store session and delete once it is read
-        $request->session()->flach();
+        // $request->session()->flach();
 
         return view("home", ["count" => $count]);
     }
