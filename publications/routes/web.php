@@ -19,6 +19,7 @@ Route::get("/", [HomeController::class, "index"])->name("homepage");
 
 
 Route::resource("profiles", ProfileController::class);
+Route::get("/verify_email/{token}", [ProfileController::class, "verifyEmail"])->name("profiles.verify_email");
 Route::resource("publications", PublicationController::class);
 // when we use the resource method we get the following routes
 // GET /profiles => index : to get all profiles

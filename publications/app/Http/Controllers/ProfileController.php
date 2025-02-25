@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Mail\ProfileMail;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller
 {
@@ -130,8 +132,12 @@ class ProfileController extends Controller
         $this->uploadImage($request, $formFields);
 
         //* insertion after hashing the password:
-        Profile::create($formFields);
+        $profile = Profile::create($formFields);
         Cache::forget("profiles");
+
+        // to send an email to the user after creating the profile
+        $mailer = new ProfileMail($profile);
+        Mail::to("akramibnelyazid@gmail.com")->send($mailer);
 
         //* redirections :
         // to redirect the user to the profiles page after storing the data in the database
@@ -149,6 +155,25 @@ class ProfileController extends Controller
         // bc we choose the fields that we want to insert in the database
         // and we can add some conditions to the fields before inserting them in the database
         // and the method 2 is not secure bc we can insert fields that we don't want to insert in the database example : field created by the user, and the can know the name of fields that we have in the database 
+    }
+
+    public function verifyEmail(string $token){
+    // to decode the token
+        [$created_at, $id] = explode("//", base64_decode($token));
+        $profile = Profile::findOrFail($id);
+        if($profile->created_at->format("d-m-Y") != $created_at){
+            return abort(404);
+        }
+
+        if($profile->email_verified_at != null){
+            return response("Email already verified", 403);
+        }
+
+        $name = $profile->name;
+        $email = $profile->email;
+        $profile->fill(["email_verified_at" => now()])->save();
+
+        return view("profile.email_verified", compact("name", "email"));
     }
 
     public function destroy(Profile $profile){

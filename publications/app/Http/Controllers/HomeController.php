@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProfileMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -31,6 +33,10 @@ class HomeController extends Controller
         // to store session and delete once it is read
         // $request->session()->flach();
 
+        // $mailer = new ProfileMail("akram", "akram@gmail");
+        // Mail::to("akramibnelyazid@gmail.com")->send($mailer);
+
         return view("home", ["count" => $count]);
+
     }
 }

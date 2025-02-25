@@ -13,7 +13,7 @@ class Profile extends Model
     // carbon instances are instances of the Carbon class(package) that is used to work with dates in laravel
     protected $dates = ["deleted_at"];
     // to make the fields fillable ( to be able to insert data in the database using the create() method)
-    protected $fillable = ["name", "email", "password", "bio", "image"];
+    protected $fillable = ["name", "email", "password", "bio", "image", "email_verified_at"];
     // to can use factory method
     use HasFactory;
 

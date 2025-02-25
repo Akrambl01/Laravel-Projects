@@ -16,7 +16,7 @@
 {{-- to add content to the layout page --}}
 @section('title') Acceuil @endsection
 <h3>Home</h3>
-Page visits {{$count}} times.tyy
+Page visits {{$count}}
 
 <div id="root"></div>
 
