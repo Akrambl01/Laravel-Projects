@@ -12,6 +12,7 @@ class ProfileResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    // toArray is a function that is used to return the data in the resource as an array to be used in the response of the api
     public function toArray(Request $request): array
     {
         $values = parent::toArray($request);

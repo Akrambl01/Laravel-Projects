@@ -16,7 +16,9 @@
 {{-- to add content to the layout page --}}
 @section('title') Acceuil @endsection
 <h3>Home</h3>
+Page visits {{$count}} times.tyy
 
+<div id="root"></div>
 
 {{-- to include a component and pass props --}}
 {{-- <x-users-table nom="akram" /> --}}
