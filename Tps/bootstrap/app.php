@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureUserHasRole;
 use App\Http\Middleware\ValideToken;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // OR register route middleware
         $middleware->alias([
             'valid.token' => ValideToken::class,
+            'role' => EnsureUserHasRole::class, // Définir un alias 'role'
         ]);
 
         //* bundles multiple middleware into one name (protected).

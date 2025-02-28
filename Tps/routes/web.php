@@ -76,3 +76,12 @@ Route::middleware(['valid.token'])->group(function () {
         return 'Settings page!';
     });
 });
+
+// middleware avec paramètre
+Route::get('/admin', function () {
+    return 'Bienvenue Admin!';
+})->middleware('role:admin'); // Vérifie si l'utilisateur a le rôle "admin"
+
+Route::get('/editor', function () {
+    return 'Bienvenue Éditeur!';
+})->middleware('role:editor'); // Vérifie si l'utilisateur a le rôle "editor"
