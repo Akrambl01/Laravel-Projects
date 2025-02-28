@@ -49,7 +49,7 @@ Route::get('/method', function (Request $request) {
     return 'HTTP Method: ' . $request->method();
 });
 
-Route::view('/welcome', 'welcome');
+Route::view('/welcome', 'welcome')->name('welcome');
 
 Route::get('/user/{id}', function ($id) {
     return 'User ID: ' . $id;
@@ -60,4 +60,19 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // Définition des routes d'administration
    });
    
-   
+
+// middleware
+Route::get('/test-middleware', function () {
+    return 'Middleware passed! You have the correct token.';
+})->middleware('valid.token'); // Apply the middleware alias
+
+// groupement de middleware
+Route::middleware(['valid.token'])->group(function () {
+    Route::get('/dashboard', function () {
+        return 'Dashboard page!';
+    });
+
+    Route::get('/settings', function () {
+        return 'Settings page!';
+    });
+});

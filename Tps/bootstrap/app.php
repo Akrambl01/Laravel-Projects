@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ValideToken;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +13,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Register global middleware
+        // $middleware->append(ValideToken::class);
+
+        // OR register route middleware
+        $middleware->alias([
+            'valid.token' => ValideToken::class,
+        ]);
+
+        //* bundles multiple middleware into one name (protected).
+        $middleware->group('protected', [
+            'auth',         // Requires user authentication
+            'valid.token',  // Requires a valid token in the request
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
