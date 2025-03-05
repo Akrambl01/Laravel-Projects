@@ -1,4 +1,5 @@
-<form method="POST" action="{{ route('users.store') }}">
+<form method="POST" action="/users">
+    {{-- Étape 5 : Protection CSRF --}}
     @csrf
     <div class="form-group">
         <label for="name">Name</label>
