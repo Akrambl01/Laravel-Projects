@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Models\Publication;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Profile extends Model
+class Profile extends User implements MustVerifyEmail
 {
     // to use date fields in the model (created_at, updated_at, deleted_at) as carbon instances
     // carbon instances are instances of the Carbon class(package) that is used to work with dates in laravel
