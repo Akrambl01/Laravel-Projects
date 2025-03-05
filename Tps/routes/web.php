@@ -28,11 +28,13 @@ Route::get('/greeting', function () {
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
+// Route::get('/request', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+
 // Route::get('/users/{id}', [UserController::class, 'edit'])->name('users.edit');
 
 
@@ -58,6 +60,6 @@ Route::get('/user/{id}', function ($id) {
 // groupement de routes
 Route::prefix('admin')->middleware('auth')->group(function () {
     // Définition des routes d'administration
-   });
+});
    
    

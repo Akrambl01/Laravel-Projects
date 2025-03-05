@@ -24,9 +24,29 @@ class UserController extends Controller
         return view('user.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return 'create user (store)';
+        // Récupérer des informations sur la requête 
+        $path = $request->path();
+        $url = $request->url();
+        $full = $request->fullUrl();
+        $method = $request->method();
+        $input = $request->input();
+        $query = $request->query();
+        $header = $request->userAgent();
+        $file = $request->file('image');
+        $date = $request->date("Y-m-d");
+        $cookieset = $request->cookie('name', 'value');
+        $cookieget = $request->cookie('name');
+        $cookie = $request->cookie();
+
+        // Exemples d'utilisation de méthodes pour récupérer les données d'entrée
+        $name = $request->input('name');
+        $allInput = $request->all();
+        $queryParam = $request->query('param');
+        $oldInput = $request->old('name');
+        dd($path, $url, $full, $method, $input, $query, $header, $file, $date, $cookieset, $cookieget, $cookie, $name, $allInput, $queryParam, $oldInput);
+        return redirect('/users');
     }
 
     public function update($id)
