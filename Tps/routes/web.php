@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 Route::get('/greeting', function () {
@@ -41,7 +42,7 @@ Route::get('/users/create', [UserController::class, 'create'])->name('users.crea
 Route::redirect('/here', '/there', 301);
 Route::get('/there', function () {
     return 'You are here!';
-}); 
+});
 
 
 // injection de dépendance
@@ -58,6 +59,30 @@ Route::get('/user/{id}', function ($id) {
 // groupement de routes
 Route::prefix('admin')->middleware('auth')->group(function () {
     // Définition des routes d'administration
-   });
-   
-   
+});
+
+//? response:
+Route::get('/hello', function () {
+    return 'bonjour le monde';
+});
+Route::get('/numbers', function () {
+    return [1, 2, 3];
+});
+
+Route::get('/user/{user}', function (User $user) {
+    return $user;
+});
+
+Route::get('/cookie', function () {
+    return response('Bonjour le Monde')->cookie('name', 'value', 60);
+});
+
+// Route pour la redirection vers une page de tableau de bord
+Route::get('/dashboard', function () {
+    return redirect('dashboard/home');
+});
+// Route pour la redirection vers l'emplacement précédent
+Route::post('/submit-form', function () {
+    // Logique de validation...
+    return back()->withInput();
+});
