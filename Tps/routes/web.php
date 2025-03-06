@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,16 @@ require __DIR__.'/auth.php';
 
 
 
+//? Création d'une vue
+// php artisan make:view greeting
+// Route pour retourner la vue
+Route::get('/greeting', function () {
+ return view('greeting', ['name' => 'Akram']);
+});
 
+Route::resource('admin', AdminController::class);
 
-   
-   
+//? Précompiler toutes les vues utilisées par l'application
+// php artisan view:cache
+//? Vider le cache des vues
+// php artisan view:clear
