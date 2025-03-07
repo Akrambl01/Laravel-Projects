@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Notifications\Notifiable;
 
 class Profile extends User implements MustVerifyEmail
 {
@@ -20,6 +22,7 @@ class Profile extends User implements MustVerifyEmail
 
     // to use soft delete
     use SoftDeletes;
+    use Notifiable;
 
     public function getImageAttribute($value)
     // this functions is used to get the image from the database and if the image is null it will return the default image value when i use the image attribute in the view
