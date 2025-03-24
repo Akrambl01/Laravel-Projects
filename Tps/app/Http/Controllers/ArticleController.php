@@ -41,8 +41,8 @@ class ArticleController extends Controller
             $validated['title'],
             $validated['content'],
             $validated['author'],
-            ]);
-            return redirect()->route('articles.index')->with('success','article created successfully');
+        ]);
+        return redirect()->route('articles.index')->with('success','article created successfully');
     }
 
     /**
