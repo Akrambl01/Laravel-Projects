@@ -48,7 +48,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Modifier l'article</button>
+                        <button type="submit" style="background: black; " class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Modifier l'article</button>
                     </form>
                 </div>
             </div>
