@@ -6,7 +6,7 @@
 *.md diff=markdown
 *.php diff=php
 *.php linguist-vendored
-*.blade linguist-vendored
+*.blade.php linguist-vendored
 
 /.github export-ignore
 CHANGELOG.md export-ignore
