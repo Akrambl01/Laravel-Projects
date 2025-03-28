@@ -14,7 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = DB::select('select * from articles');
+        //$articles = DB::select('select * from articles');
+        $articles = DB::table('articles')->get();
         return view('articles.index', compact('articles'));
     }
 
@@ -37,11 +38,12 @@ class ArticleController extends Controller
             'author' =>'required',
         ]);
 
-        DB::insert('insert into articles (title, content, author) values (?, ?, ?)', [
-            $validated['title'],
-            $validated['content'],
-            $validated['author'],
-        ]);
+        // DB::insert('insert into articles (title, content, author) values (?, ?, ?)', [
+        //     $validated['title'],
+        //     $validated['content'],
+        //     $validated['author'],
+        // ]);
+        DB::table('articles')->insert($validated);
         return redirect()->route('articles.index')->with('success','article created successfully');
     }
 
@@ -71,12 +73,13 @@ class ArticleController extends Controller
             'content' =>'required',
             'author' =>'required',
         ]);
-        DB::update('update articles set title = ?, content = ?, author = ? where id = ?', [
-        $validated['title'],
-        $validated['content'],
-        $validated['author'],
-        $article->id
-        ]);
+        // DB::update('update articles set title = ?, content = ?, author = ? where id = ?', [
+        // $validated['title'],
+        // $validated['content'],
+        // $validated['author'],
+        // $article->id
+        // ]);
+        DB::table('articles')->where('id',$article->id)->update($validated);
         return redirect()->route('articles.index')->with('success','article updated successfully');
     }
 
@@ -85,7 +88,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        DB::delete('delete from articles where id = ?', [$article->id]);
+        // DB::delete('delete from articles where id = ?', [$article->id]);
+        DB::table('articles')->where('id', $article->id)->delete();
         return redirect()->route('articles.index')->with('success','article deleted successfully');
     }
 }
